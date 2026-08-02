@@ -1,0 +1,25 @@
+# Project Specific - Ignore large dataset raw clips
+datasets/raw_clips/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments (Virtual env folders)
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IDE folders
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db

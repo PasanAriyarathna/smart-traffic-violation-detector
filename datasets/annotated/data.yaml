@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 7
+names: ['illegal overtaking', 'illegal parking', 'illegal u turn', 'no helmet', 'number plate', 'red light violation', 'traffic light red']
+
+roboflow:
+  workspace: secure-protect
+  project: traffic-violation-detection-j6bwp
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/secure-protect/traffic-violation-detection-j6bwp/dataset/1
