@@ -1,0 +1,6 @@
+# Runtime dependencies used by model/violation_detector.py and
+# preprocessing/frame_extractor.py. Install a compatible PyTorch build through
+# Ultralytics' dependency resolution or the official PyTorch instructions.
+numpy
+opencv-python
+ultralytics
