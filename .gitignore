@@ -23,3 +23,20 @@ ENV/
 # OS generated files
 .DS_Store
 Thumbs.db
+
+# Dataset annotations and generated training data
+datasets/annotated/
+datasets/extracted_frames/
+datasets/training_copy/
+
+# Model weights and generated experiment outputs
+runs/
+*.pt
+*.onnx
+
+# Python environment and local secrets
+.env.*
+!.env.example
+
+# Generated reports and temporary files
+*.log

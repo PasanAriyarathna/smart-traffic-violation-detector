@@ -1,88 +1,97 @@
-import cv2
-import os
+"""Extract evenly spaced frames from videos for manual annotation."""
+
 import argparse
+from pathlib import Path
+
+import cv2
 
 
-def extract_frames_evenly(video_path, output_dir, frames_per_video=30):
-    """
-    Extracts a fixed number of frames evenly spread across the full
-    length of a video (instead of using a fixed frame-skip interval),
-    so short and long clips are represented proportionally.
-    """
-    os.makedirs(output_dir, exist_ok=True)
-    cap = cv2.VideoCapture(video_path)
+NUM_FRAMES = 30
+SUPPORTED_EXTENSIONS = {".mp4", ".avi", ".mov", ".mkv"}
+JPEG_QUALITY = 95
+
+
+def extract_frames(video_path: Path, output_dir: Path, num_frames: int = NUM_FRAMES) -> tuple[int, bool]:
+    """Save up to ``num_frames`` frames sampled across the full video duration."""
+    cap = cv2.VideoCapture(str(video_path))
+    if not cap.isOpened():
+        print(f"FAILED: {video_path.name} (could not open video)")
+        cap.release()
+        return 0, False
 
     total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    fps = float(cap.get(cv2.CAP_PROP_FPS))
+    duration = total_frames / fps if fps > 0 and total_frames > 0 else 0.0
+    print(
+        f"Video: {video_path.name} | total frames: {total_frames} | "
+        f"FPS: {fps:.3f} | duration: {duration:.2f}s"
+    )
 
     if total_frames <= 0:
-        print(f"⚠️ Could not read: {video_path}")
         cap.release()
-        return 0
+        print(f"FAILED: {video_path.name} (frame count unavailable)")
+        return 0, False
 
-    step = max(1, total_frames // frames_per_video)
-
-    count = 0
-    saved_count = 0
-
-    while cap.isOpened():
-        ret, frame = cap.read()
-        if not ret:
-            break
-        if count % step == 0 and saved_count < frames_per_video:
-            frame_name = os.path.join(output_dir, f"frame_{saved_count:04d}.jpg")
-            cv2.imwrite(frame_name, frame)
-            saved_count += 1
-        count += 1
+    # Include the beginning and end; rounded unique indices stay evenly spread.
+    sample_count = min(num_frames, total_frames)
+    indices = [round(i * (total_frames - 1) / max(sample_count - 1, 1))
+               for i in range(sample_count)]
+    output_dir.mkdir(parents=True, exist_ok=True)
+    extracted = 0
+    for output_index, frame_index in enumerate(indices, start=1):
+        cap.set(cv2.CAP_PROP_POS_FRAMES, frame_index)
+        ok, frame = cap.read()
+        if not ok or frame is None:
+            print(f"  Could not decode frame {frame_index}; skipping it.")
+            continue
+        destination = output_dir / f"frame_{output_index:04d}.jpg"
+        if cv2.imwrite(str(destination), frame, [cv2.IMWRITE_JPEG_QUALITY, JPEG_QUALITY]):
+            extracted += 1
+        else:
+            print(f"  Could not save {destination.name}.")
 
     cap.release()
-    print(f"✅ {os.path.basename(video_path)} -> {saved_count} frames "
-          f"(step={step}, total_frames={total_frames})")
-    return saved_count
+    success = extracted > 0
+    print(f"Extracted frame count: {extracted}/{num_frames}")
+    return extracted, success
 
 
-def main():
-    parser = argparse.ArgumentParser(description="Extract frames from dashcam video clips.")
-    parser.add_argument('--input', required=True, help='Folder containing raw video clips')
-    parser.add_argument('--output', required=True, help='Folder to save extracted frames')
-    parser.add_argument('--frames_per_video', type=int, default=30,
-                         help='Number of frames to extract per video (default: 30)')
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Extract evenly spaced video frames.")
+    parser.add_argument("--input", required=True, help="Folder containing source videos")
+    parser.add_argument("--output", required=True, help="Folder for per-video frame folders")
+    parser.add_argument("--num-frames", type=int, default=NUM_FRAMES,
+                        help=f"Frames to sample per video (default: {NUM_FRAMES})")
     args = parser.parse_args()
+    if args.num_frames < 1:
+        parser.error("--num-frames must be at least 1")
 
-    video_folder = args.input
-    output_folder = args.output
+    input_dir = Path(args.input)
+    output_dir = Path(args.output)
+    if not input_dir.is_dir():
+        parser.error(f"Input folder does not exist: {input_dir}")
 
-    if not os.path.exists(video_folder):
-        print(f"❌ Folder not found: {video_folder}")
-        return
+    videos = sorted(path for path in input_dir.iterdir()
+                    if path.is_file() and path.suffix.lower() in SUPPORTED_EXTENSIONS)
+    successful = 0
+    failed: list[str] = []
+    total_extracted = 0
 
-    print(f"✅ Found video folder: {video_folder}")
+    for video_path in videos:
+        video_output = output_dir / video_path.stem
+        extracted, ok = extract_frames(video_path, video_output, args.num_frames)
+        total_extracted += extracted
+        if ok:
+            successful += 1
+        else:
+            failed.append(video_path.name)
 
-    total_frames_extracted = 0
-    video_count = 0
-    failed_videos = []
-
-    for video_file in os.listdir(video_folder):
-        if video_file.lower().endswith(('.mp4', '.mov', '.avi', '.mkv')):
-            video_path = os.path.join(video_folder, video_file)
-            video_name = os.path.splitext(video_file)[0]
-            video_output_dir = os.path.join(output_folder, video_name)
-
-            frames_saved = extract_frames_evenly(video_path, video_output_dir, args.frames_per_video)
-
-            if frames_saved > 0:
-                total_frames_extracted += frames_saved
-                video_count += 1
-            else:
-                failed_videos.append(video_file)
-
-    print("\n" + "=" * 50)
-    print("SUMMARY")
-    print("=" * 50)
-    print(f"Videos processed successfully: {video_count}")
-    print(f"Total frames extracted: {total_frames_extracted}")
-    if failed_videos:
-        print(f"⚠️ Failed videos ({len(failed_videos)}): {failed_videos}")
-    print(f"Frames saved to: {output_folder}")
+    print("\nSUMMARY")
+    print(f"Total videos found: {len(videos)}")
+    print(f"Successfully processed videos: {successful}")
+    print(f"Failed videos: {len(failed)}" + (f" ({', '.join(failed)})" if failed else ""))
+    print(f"Total frames extracted: {total_extracted}")
+    print(f"Frames saved to: {output_dir}")
 
 
 if __name__ == "__main__":
