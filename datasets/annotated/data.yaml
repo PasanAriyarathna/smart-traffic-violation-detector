@@ -1,13 +1,13 @@
-train: ../train/images
-val: ../valid/images
-test: ../test/images
+train: train/images
+val: valid/images
+test: test/images
 
-nc: 7
-names: ['illegal overtaking', 'illegal parking', 'illegal u turn', 'no helmet', 'number plate', 'red light violation', 'traffic light red']
+nc: 13
+names: ['broken_line', 'bus', 'car', 'crosswalk', 'double_solid_line', 'helmet', 'motorcycle', 'number_plate', 'person', 'solid_line', 'three_wheeler', 'traffic_light', 'truck']
 
 roboflow:
-  workspace: secure-protect
-  project: traffic-violation-detection-j6bwp
+  workspace: pasan-priyasanka-s-workspace
+  project: traffic-violation-detection-ebuul
   version: 1
   license: CC BY 4.0
-  url: https://universe.roboflow.com/secure-protect/traffic-violation-detection-j6bwp/dataset/1
+  url: https://universe.roboflow.com/pasan-priyasanka-s-workspace/traffic-violation-detection-ebuul/dataset/1
