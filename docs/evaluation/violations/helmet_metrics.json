@@ -1,0 +1,22 @@
+{
+  "formulas": {
+    "precision": "TP / (TP + FP) on reviewed candidate rows labeled TP or FP",
+    "recall": "TP / (TP + FN) where FN comes from independent full-video review, not CSV rows",
+    "f1": "2 * precision * recall / (precision + recall)"
+  },
+  "total_candidates": 48,
+  "tp": 0,
+  "fp": 0,
+  "ambiguous": 0,
+  "unreviewed": 48,
+  "reviewed_for_precision": 0,
+  "precision": null,
+  "fn_independent_video_review": null,
+  "recall": null,
+  "f1": null,
+  "limitations": [
+    "Recall is NOT MEASURED until fn_independent_video_review is supplied.",
+    "Unreviewed and Ambiguous rows are excluded from precision.",
+    "Metrics are candidate-level, not legal violation convictions."
+  ]
+}

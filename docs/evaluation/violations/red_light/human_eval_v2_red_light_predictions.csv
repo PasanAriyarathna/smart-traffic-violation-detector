@@ -1,0 +1,1 @@
+event_id,video_filename,video_timestamp,candidate_type,tracking_id,other_vehicle_tracking_id,signal_state,detection_evidence_score,evidence_image,ground_truth_label,reviewer_notes

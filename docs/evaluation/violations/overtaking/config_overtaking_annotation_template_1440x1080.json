@@ -1,0 +1,13 @@
+{
+  "frame_width": 1440,
+  "frame_height": 1080,
+  "lanes": {
+    "travel": null,
+    "passing": null
+  },
+  "progress_direction": null,
+  "prohibited_passing_zones": [],
+  "prohibition_basis": null,
+  "unsupported_reason": "Polygons not yet drawn for this camera — use OVERTAKING_POLYGON_GUIDE.md",
+  "_annotation_instructions": "Replace null/empty fields after tracing lane edges on diagnostic frames. Do not use a 50/50 vertical split unless it matches painted lanes."
+}

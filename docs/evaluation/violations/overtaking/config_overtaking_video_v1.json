@@ -1,0 +1,14 @@
+{
+  "frame_width": 1440,
+  "frame_height": 1080,
+  "lanes": {
+    "travel": [[0.0, 0.0], [0.55, 0.0], [0.55, 1.0], [0.0, 1.0]],
+    "passing": [[0.55, 0.0], [1.0, 0.0], [1.0, 1.0], [0.55, 1.0]]
+  },
+  "progress_direction": [0.0, 1.0],
+  "prohibited_passing_zones": [
+    [[0.55, 0.0], [1.0, 0.0], [1.0, 1.0], [0.55, 1.0]]
+  ],
+  "prohibition_basis": "Placeholder lane layout for evaluation smoke run — requires manual camera calibration.",
+  "_validation_note": "Polygons are template defaults, not verified for this clip."
+}

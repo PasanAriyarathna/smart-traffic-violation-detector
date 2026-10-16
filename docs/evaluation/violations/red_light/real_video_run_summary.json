@@ -1,0 +1,19 @@
+{
+  "validation_run_v1": {
+    "video": "datasets/raw_clips/red light events/red light.mp4",
+    "config": "config_red_light_video_v1.json",
+    "frames_processed": 120,
+    "candidates_recorded": 0,
+    "run_directory": "real_video_runs/red light_20261009_181326"
+  },
+  "diagnostic_rerun_not_for_validation": {
+    "config": "config_red_light_diagnostic_signal_red_0_20s.json",
+    "frames_processed": 416,
+    "candidates_recorded": 2,
+    "run_directory": "real_video_runs/diagnostic_rerun_signal_red_20261009/red light_20261009_182522",
+    "predictions_csv": "diagnostic_rerun_predictions.csv",
+    "purpose": "Confirm signal-interval blocker; signal timing not human-verified"
+  },
+  "root_cause_doc": "ZERO_CANDIDATES_DIAGNOSIS.md",
+  "event_metrics": "NOT_MEASURED"
+}

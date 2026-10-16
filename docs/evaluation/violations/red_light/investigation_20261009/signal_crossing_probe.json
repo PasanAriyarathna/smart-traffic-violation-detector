@@ -1,0 +1,144 @@
+{
+  "source_video": "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\datasets\\raw_clips\\red light events\\red light.mp4",
+  "config": "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\docs\\evaluation\\violations\\red_light\\config_red_light_video_v2_user_signal_cycle.json",
+  "fps": 29.181,
+  "stop_line_crossings": [
+    {
+      "video_seconds": 11.788,
+      "track_id": 130,
+      "vehicle_class": "motorcycle",
+      "interval_start_t": 11.754,
+      "prev_center_px": [
+        255.2,
+        541.4
+      ],
+      "cur_center_px": [
+        260.4,
+        535.5
+      ],
+      "state_during_user_cycle": "green"
+    }
+  ],
+  "traffic_light_roi_samples_1hz": [
+    {
+      "frame_index": 0,
+      "video_seconds": 0.0,
+      "mean_r": 219.8,
+      "mean_g": 231.3,
+      "mean_b": 230.9,
+      "red_dominant_heuristic": false
+    },
+    {
+      "frame_index": 29,
+      "video_seconds": 0.994,
+      "mean_r": 219.9,
+      "mean_g": 231.4,
+      "mean_b": 231.0,
+      "red_dominant_heuristic": false
+    },
+    {
+      "frame_index": 58,
+      "video_seconds": 1.988,
+      "mean_r": 220.6,
+      "mean_g": 231.9,
+      "mean_b": 231.6,
+      "red_dominant_heuristic": false
+    },
+    {
+      "frame_index": 87,
+      "video_seconds": 2.981,
+      "mean_r": 221.0,
+      "mean_g": 232.2,
+      "mean_b": 232.1,
+      "red_dominant_heuristic": false
+    },
+    {
+      "frame_index": 116,
+      "video_seconds": 3.975,
+      "mean_r": 220.5,
+      "mean_g": 231.7,
+      "mean_b": 231.4,
+      "red_dominant_heuristic": false
+    },
+    {
+      "frame_index": 145,
+      "video_seconds": 4.969,
+      "mean_r": 220.2,
+      "mean_g": 231.3,
+      "mean_b": 231.0,
+      "red_dominant_heuristic": false
+    },
+    {
+      "frame_index": 174,
+      "video_seconds": 5.963,
+      "mean_r": 219.3,
+      "mean_g": 230.5,
+      "mean_b": 229.9,
+      "red_dominant_heuristic": false
+    },
+    {
+      "frame_index": 203,
+      "video_seconds": 6.957,
+      "mean_r": 226.1,
+      "mean_g": 235.8,
+      "mean_b": 235.5,
+      "red_dominant_heuristic": false
+    },
+    {
+      "frame_index": 232,
+      "video_seconds": 7.95,
+      "mean_r": 228.8,
+      "mean_g": 237.2,
+      "mean_b": 235.5,
+      "red_dominant_heuristic": false
+    },
+    {
+      "frame_index": 261,
+      "video_seconds": 8.944,
+      "mean_r": 234.3,
+      "mean_g": 240.4,
+      "mean_b": 238.6,
+      "red_dominant_heuristic": false
+    },
+    {
+      "frame_index": 290,
+      "video_seconds": 9.938,
+      "mean_r": 231.1,
+      "mean_g": 238.6,
+      "mean_b": 236.3,
+      "red_dominant_heuristic": false
+    },
+    {
+      "frame_index": 319,
+      "video_seconds": 10.932,
+      "mean_r": 226.2,
+      "mean_g": 235.0,
+      "mean_b": 232.5,
+      "red_dominant_heuristic": false
+    },
+    {
+      "frame_index": 348,
+      "video_seconds": 11.926,
+      "mean_r": 220.5,
+      "mean_g": 230.8,
+      "mean_b": 228.1,
+      "red_dominant_heuristic": false
+    },
+    {
+      "frame_index": 377,
+      "video_seconds": 12.919,
+      "mean_r": 225.0,
+      "mean_g": 235.1,
+      "mean_b": 232.6,
+      "red_dominant_heuristic": false
+    },
+    {
+      "frame_index": 406,
+      "video_seconds": 13.913,
+      "mean_r": 224.9,
+      "mean_g": 235.1,
+      "mean_b": 232.5,
+      "red_dominant_heuristic": false
+    }
+  ]
+}

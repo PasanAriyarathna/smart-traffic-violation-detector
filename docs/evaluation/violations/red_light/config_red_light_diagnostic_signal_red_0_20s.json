@@ -1,0 +1,12 @@
+{
+  "frame_width": 1268,
+  "frame_height": 718,
+  "traffic_light_regions": [[0.82, 0.02, 0.98, 0.24]],
+  "stop_line": [[185, 459], [1083, 459]],
+  "approach_side": -1,
+  "cooldown_seconds": 10,
+  "signal_states": [
+    {"start_seconds": 0.0, "end_seconds": 20.0, "state": "red"}
+  ],
+  "_validation_note": "DIAGNOSTIC ONLY — not human-verified signal timing. Used to test whether geometric crossings would emit candidates if signal were marked red over the clip duration."
+}

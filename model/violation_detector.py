@@ -21,6 +21,7 @@ from typing import Any
 import cv2
 import numpy as np
 try:  # Support both `python model/violation_detector.py` and package imports.
+    from .plate_ocr import PlateOCRReader, PlateReadResult, best_plate_for_vehicle
     from .rules.red_light import RedLightConfig, RedLightRule, candidate_record
     from .rules.overtaking import (
         OvertakingConfig,
@@ -28,6 +29,7 @@ try:  # Support both `python model/violation_detector.py` and package imports.
         candidate_record as overtaking_candidate_record,
     )
 except ImportError:
+    from plate_ocr import PlateOCRReader, PlateReadResult, best_plate_for_vehicle
     from rules.red_light import RedLightConfig, RedLightRule, candidate_record
     from rules.overtaking import (
         OvertakingConfig,
@@ -158,6 +160,21 @@ def build_parser() -> argparse.ArgumentParser:
         "--max-frames",
         type=int,
         help="Optional frame limit, useful for a short smoke test",
+    )
+    parser.add_argument(
+        "--enable-plate-ocr",
+        action="store_true",
+        help="Run optional EasyOCR on detected number_plate regions (requires easyocr)",
+    )
+    parser.add_argument(
+        "--plate-hash-salt",
+        default="",
+        help="Optional salt mixed into stored plate hashes (keep in environment, not Git)",
+    )
+    parser.add_argument(
+        "--include-plate-text-in-records",
+        action="store_true",
+        help="Store normalized plate text in JSONL (default: hash and confidence only)",
     )
     return parser
 
@@ -457,6 +474,62 @@ class CandidateStabilizer:
         return ready
 
 
+def _plate_fields_for_vehicle(
+    vehicle_xyxy: tuple[float, float, float, float],
+    plate_readings: list[tuple[tuple[float, float, float, float], PlateReadResult | None]],
+    *,
+    include_text: bool,
+) -> dict[str, Any]:
+    reading = best_plate_for_vehicle(vehicle_xyxy, plate_readings)
+    if reading is None:
+        return {}
+    fields: dict[str, Any] = {
+        "plate_hash_sha256": reading.plate_hash,
+        "ocr_confidence": round(reading.confidence, 4),
+        "plate_text_stored": include_text,
+    }
+    if include_text:
+        fields["plate_text_normalized"] = reading.normalized_text
+    return fields
+
+
+def _collect_plate_readings(
+    frame: Any,
+    detections: list[Detection],
+    reader: PlateOCRReader | None,
+    *,
+    hash_salt: str,
+) -> list[tuple[tuple[float, float, float, float], PlateReadResult | None]]:
+    if reader is None:
+        return []
+    frame_height, frame_width = frame.shape[:2]
+    readings: list[tuple[tuple[float, float, float, float], PlateReadResult | None]] = []
+    for detection in detections:
+        if detection.name != "number_plate":
+            continue
+        x1 = max(0, min(frame_width, int(round(detection.xyxy[0]))))
+        y1 = max(0, min(frame_height, int(round(detection.xyxy[1]))))
+        x2 = max(0, min(frame_width, int(round(detection.xyxy[2]))))
+        y2 = max(0, min(frame_height, int(round(detection.xyxy[3]))))
+        if x2 <= x1 or y2 <= y1:
+            continue
+        crop = frame[y1:y2, x1:x2]
+        reading = reader.read_crop(crop, hash_salt=hash_salt)
+        readings.append((detection.xyxy, reading))
+    return readings
+
+
+def _vehicle_box_for_track(
+    track_id: int | None, vehicle_detections: list[Detection]
+) -> tuple[float, float, float, float] | None:
+    if track_id is None:
+        return None
+    for detection in vehicle_detections:
+        if detection.track_id == track_id:
+            return detection.xyxy
+    return None
+
+
 def _draw_detections(
     frame: Any,
     detections: list[Detection],
@@ -611,6 +684,7 @@ def _record_red_light_candidate(
     annotated_frame: Any,
     source_path: Path,
     candidate: Any,
+    extra_fields: dict[str, Any] | None = None,
 ) -> bool:
     event_id = str(uuid.uuid4())
     evidence_path = evidence_dir / f"{event_id}.jpg"
@@ -620,6 +694,8 @@ def _record_red_light_candidate(
     event = candidate_record(
         candidate, event_id, str(evidence_path.resolve()), source_path.name
     )
+    if extra_fields:
+        event.update(extra_fields)
     record_file.write(json.dumps(event, ensure_ascii=False) + "\n")
     record_file.flush()
     return True
@@ -649,6 +725,7 @@ def _record_overtaking_candidate(
     annotated_frame: Any,
     source_path: Path,
     candidate: Any,
+    extra_fields: dict[str, Any] | None = None,
 ) -> bool:
     event_id = str(uuid.uuid4())
     evidence_path = evidence_dir / f"{event_id}.jpg"
@@ -658,6 +735,8 @@ def _record_overtaking_candidate(
     event = overtaking_candidate_record(
         candidate, event_id, str(evidence_path.resolve()), source_path.name
     )
+    if extra_fields:
+        event.update(extra_fields)
     record_file.write(json.dumps(event, ensure_ascii=False) + "\n")
     record_file.flush()
     return True
@@ -745,6 +824,7 @@ def _record_candidate(
     source_path: Path,
     video_seconds: float,
     candidate: ReviewCandidate,
+    extra_fields: dict[str, Any] | None = None,
 ) -> bool:
     person = candidate.person
     motorcycle = candidate.motorcycle
@@ -782,6 +862,8 @@ def _record_candidate(
         ),
         "evidence_image": str(evidence_path.resolve()),
     }
+    if extra_fields:
+        event.update(extra_fields)
     record_file.write(json.dumps(event, ensure_ascii=False) + "\n")
     record_file.flush()
     return True
@@ -889,6 +971,20 @@ def run_detector(args: argparse.Namespace) -> int:
             window_seconds=args.association_window,
             inactivity_seconds=args.cooldown,
         )
+        plate_reader: PlateOCRReader | None = None
+        if args.enable_plate_ocr:
+            plate_reader = PlateOCRReader(gpu=False)
+            if not plate_reader.available:
+                print(
+                    f"WARNING: Plate OCR disabled: {plate_reader.unavailable_reason}",
+                    file=sys.stderr,
+                )
+                plate_reader = None
+            else:
+                print(
+                    "Plate OCR enabled; JSONL stores hashes by default, not raw plate text.",
+                    file=sys.stderr,
+                )
         with records_path.open("x", encoding="utf-8") as record_file:
             while True:
                 predictions = model.track(
@@ -937,6 +1033,12 @@ def run_detector(args: argparse.Namespace) -> int:
                     for candidate in overtaking_candidates
                     for track_id in (candidate.passing_track_id, candidate.passed_track_id)
                 }
+                plate_readings = _collect_plate_readings(
+                    frame,
+                    detections,
+                    plate_reader,
+                    hash_salt=args.plate_hash_salt,
+                )
                 red_candidate_detections = [
                     detection for detection in vehicle_detections
                     if detection.track_id in red_candidate_ids | overtaking_candidate_ids
@@ -950,6 +1052,11 @@ def run_detector(args: argparse.Namespace) -> int:
                     _draw_overtaking_configuration(annotated, overtaking_config)
 
                 for candidate in ready_candidates:
+                    plate_fields = _plate_fields_for_vehicle(
+                        candidate.motorcycle.xyxy,
+                        plate_readings,
+                        include_text=args.include_plate_text_in_records,
+                    )
                     if _record_candidate(
                         record_file,
                         evidence_dir,
@@ -957,18 +1064,49 @@ def run_detector(args: argparse.Namespace) -> int:
                         source_path,
                         video_seconds,
                         candidate,
+                        plate_fields or None,
                     ):
                         records_written += 1
 
                 for candidate in red_light_candidates:
+                    vehicle_box = _vehicle_box_for_track(candidate.track_id, vehicle_detections)
+                    plate_fields = (
+                        _plate_fields_for_vehicle(
+                            vehicle_box,
+                            plate_readings,
+                            include_text=args.include_plate_text_in_records,
+                        )
+                        if vehicle_box is not None
+                        else {}
+                    )
                     if _record_red_light_candidate(
-                        record_file, evidence_dir, annotated, source_path, candidate
+                        record_file,
+                        evidence_dir,
+                        annotated,
+                        source_path,
+                        candidate,
+                        plate_fields or None,
                     ):
                         records_written += 1
 
                 for candidate in overtaking_candidates:
+                    vehicle_box = _vehicle_box_for_track(candidate.passing_track_id, vehicle_detections)
+                    plate_fields = (
+                        _plate_fields_for_vehicle(
+                            vehicle_box,
+                            plate_readings,
+                            include_text=args.include_plate_text_in_records,
+                        )
+                        if vehicle_box is not None
+                        else {}
+                    )
                     if _record_overtaking_candidate(
-                        record_file, evidence_dir, annotated, source_path, candidate
+                        record_file,
+                        evidence_dir,
+                        annotated,
+                        source_path,
+                        candidate,
+                        plate_fields or None,
                     ):
                         records_written += 1
 

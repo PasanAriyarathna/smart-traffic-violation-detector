@@ -1,0 +1,15 @@
+{
+  "frame_width": 1920,
+  "frame_height": 1080,
+  "traffic_light_regions": [[0.82, 0.02, 0.98, 0.24]],
+  "stop_line": [[280, 690], [1640, 690]],
+  "approach_side": -1,
+  "cooldown_seconds": 10,
+  "signal_states": [
+    {"start_seconds": 0.0, "end_seconds": 12.0, "state": "unknown"},
+    {"start_seconds": 12.0, "end_seconds": 18.5, "state": "red"},
+    {"start_seconds": 18.5, "end_seconds": 21.0, "state": "amber"},
+    {"start_seconds": 21.0, "end_seconds": 36.0, "state": "green"}
+  ],
+  "_comment": "Replace dimensions, geometry, and manually reviewed signal intervals after watching the exact source video."
+}

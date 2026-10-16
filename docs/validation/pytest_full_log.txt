@@ -1,0 +1,62 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.13.1, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Pasan\AppData\Local\venvs\smart-traffic-yolo\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: D:\Campus\semester 6\Intelligent system\smart-traffic-violation-detector
+plugins: anyio-4.15.1
+collecting ... collected 26 items
+
+tests/test_api_integration.py::BackendIntegrationTests::test_health PASSED [  3%]
+tests/test_api_integration.py::BackendIntegrationTests::test_import_and_verify PASSED [  7%]
+tests/test_api_integration.py::BackendIntegrationTests::test_import_missing_jsonl PASSED [ 11%]
+tests/test_overtaking_rule.py::OvertakingRuleTests::test_complete_same_direction_pass_through_configured_zone PASSED [ 15%]
+tests/test_overtaking_rule.py::OvertakingRuleTests::test_duplicate_pair_event_is_suppressed PASSED [ 19%]
+tests/test_overtaking_rule.py::OvertakingRuleTests::test_lane_change_into_passing_without_progress_crossing_is_not_overtaking PASSED [ 23%]
+tests/test_overtaking_rule.py::OvertakingRuleTests::test_missing_geometry_or_prohibition_configuration_disables_rule PASSED [ 26%]
+tests/test_overtaking_rule.py::OvertakingRuleTests::test_opposite_direction_progress_does_not_create_candidate PASSED [ 30%]
+tests/test_overtaking_rule.py::OvertakingRuleTests::test_order_reversal_without_entering_passing_lane_is_not_overtaking PASSED [ 34%]
+tests/test_overtaking_rule.py::OvertakingRuleTests::test_pass_outside_configured_prohibition_zone_is_not_illegal_candidate PASSED [ 38%]
+tests/test_overtaking_rule.py::OvertakingRuleTests::test_temporary_detection_loss_clears_trajectory PASSED [ 42%]
+tests/test_overtaking_rule.py::OvertakingRuleTests::test_too_few_observations_do_not_create_candidate PASSED [ 46%]
+tests/test_overtaking_rule.py::OvertakingRuleTests::test_tracking_id_change_does_not_stitch_a_maneuver PASSED [ 50%]
+tests/test_overtaking_rule.py::OvertakingRuleTests::test_vehicles_side_by_side_in_travel_lane_without_passing_lane_use PASSED [ 53%]
+tests/test_plate_ocr.py::PlateOcrTests::test_character_error_rate PASSED [ 57%]
+tests/test_plate_ocr.py::PlateOcrTests::test_hash_is_stable PASSED       [ 61%]
+tests/test_plate_ocr.py::PlateOcrTests::test_normalize_plate_text PASSED [ 65%]
+tests/test_red_light_rule.py::RedLightRuleTests::test_amber_interval_never_creates_candidate PASSED [ 69%]
+tests/test_red_light_rule.py::RedLightRuleTests::test_crossing_during_reviewed_red_interval_creates_candidate PASSED [ 73%]
+tests/test_red_light_rule.py::RedLightRuleTests::test_crossing_must_intersect_finite_stop_line_segment PASSED [ 76%]
+tests/test_red_light_rule.py::RedLightRuleTests::test_green_interval_never_creates_candidate PASSED [ 80%]
+tests/test_red_light_rule.py::RedLightRuleTests::test_incomplete_config_is_accepted_but_explicitly_disables_rule PASSED [ 84%]
+tests/test_red_light_rule.py::RedLightRuleTests::test_no_crossing_or_missing_track_id_creates_no_candidate PASSED [ 88%]
+tests/test_red_light_rule.py::RedLightRuleTests::test_red_signal_vehicle_stops_before_stop_line PASSED [ 92%]
+tests/test_red_light_rule.py::RedLightRuleTests::test_same_track_crossing_is_deduplicated_during_cooldown PASSED [ 96%]
+tests/test_red_light_rule.py::RedLightRuleTests::test_unknown_or_uncovered_signal_state_never_creates_candidate 
+tests/test_red_light_rule.py::RedLightRuleTests::test_unknown_or_uncovered_signal_state_never_creates_candidate PASSED [100%]
+
+============================== warnings summary ===============================
+C:\Users\Pasan\AppData\Local\venvs\smart-traffic-yolo\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\Pasan\AppData\Local\venvs\smart-traffic-yolo\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/test_api_integration.py::BackendIntegrationTests::test_health
+tests/test_api_integration.py::BackendIntegrationTests::test_health
+  D:\Campus\semester 6\Intelligent system\smart-traffic-violation-detector\backend\app\main.py:64: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    @app.on_event("startup")
+
+tests/test_api_integration.py::BackendIntegrationTests::test_health
+tests/test_api_integration.py::BackendIntegrationTests::test_health
+  C:\Users\Pasan\AppData\Local\venvs\smart-traffic-yolo\Lib\site-packages\fastapi\applications.py:4745: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    return self.router.on_event(event_type)  # ty: ignore[deprecated]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+============== 26 passed, 5 warnings, 3 subtests passed in 1.24s ==============

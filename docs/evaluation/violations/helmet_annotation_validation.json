@@ -1,0 +1,14 @@
+{
+  "csv_path": "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\docs\\evaluation\\violations\\helmet_reviewed_annotations.csv",
+  "row_count": 48,
+  "columns_ok": true,
+  "missing_columns": [],
+  "label_counts": {
+    "unreviewed": 48
+  },
+  "reviewed_tp_or_fp_count": 0,
+  "precision_measurable": false,
+  "errors": [],
+  "warnings": [],
+  "status": "OK"
+}

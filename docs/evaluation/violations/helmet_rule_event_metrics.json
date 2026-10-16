@@ -1,0 +1,15 @@
+{
+  "predictions_csv": "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\docs\\evaluation\\violations\\helmet_event_predictions.csv",
+  "total_predictions": 48,
+  "tp": 0,
+  "fp": 0,
+  "ambiguous": 0,
+  "unlabeled": 48,
+  "evaluation_sample_count_for_precision": 0,
+  "precision": null,
+  "fn_independent": null,
+  "recall": null,
+  "f1": null,
+  "status": "NOT_MEASURED",
+  "status_reason": "No TP/FP labels; unlabeled or AMBIGUOUS only."
+}

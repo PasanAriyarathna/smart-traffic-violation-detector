@@ -1,0 +1,8 @@
+{
+  "date": "2026-10-09",
+  "command": "python scripts/populate_ocr_predictions.py",
+  "easyocr_installed": true,
+  "rows_processed": 30,
+  "predicted_nonempty_count": 0,
+  "note": "EasyOCR ran on all crops; no normalized alphanumeric text was returned. Ground truth remains empty. CER is NOT MEASURED until human labels exist; empty predictions may still be used as hypotheses once GT is entered."
+}

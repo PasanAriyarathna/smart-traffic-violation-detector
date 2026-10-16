@@ -1,0 +1,7 @@
+{
+  "evaluation_sample_count": 0,
+  "mean_cer": null,
+  "exact_match_accuracy": null,
+  "status": "NOT_MEASURED",
+  "note": "No rows with include_in_cer=yes and valid ground_truth (and hypothesis if not --run-ocr)."
+}

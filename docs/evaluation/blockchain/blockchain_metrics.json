@@ -1,0 +1,13 @@
+{
+  "network": "hardhat_local",
+  "experiment_date": "2026-10-09",
+  "command": "npm test",
+  "working_directory": "blockchain/",
+  "tests_passed": 2,
+  "tests_failed": 0,
+  "duration_seconds_approx": 6,
+  "log_path": "docs/evaluation/blockchain/hardhat_test_console.log",
+  "sepolia_deployment": "NOT_MEASURED",
+  "transaction_latency_seconds": "NOT_MEASURED",
+  "note": "Local Hardhat unit tests validate contract logic only, not Sepolia performance."
+}

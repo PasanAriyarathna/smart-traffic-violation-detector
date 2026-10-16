@@ -1,0 +1,4 @@
+row_type,interval_start_seconds,interval_end_seconds,reviewer_confirmed_state,reviewer_id,notes
+interval,0,12,red,investigation_pending_confirm,"Evidence: ROI contact sheet shows red+countdown 10→1 (0-9s); red still on at 10-11s; green arrow from ~12s. NOT merged until you confirm."
+interval,12,14.256,green,investigation_pending_confirm,"Evidence: green arrow + countdown 50 at 12.0s. Clip ends before full 50s green."
+observation,,,,,"Amber not clearly visible at 1s sampling; add interval row if you observe amber between red and green."

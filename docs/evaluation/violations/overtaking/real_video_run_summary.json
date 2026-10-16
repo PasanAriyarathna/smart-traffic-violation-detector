@@ -1,0 +1,17 @@
+{
+  "video": "datasets/raw_clips/illegal overtaking/AQM8WohQt18XbF6shV4ARkV5OhMJvivrkL9NnsXJOGWDGBT6fhfliSOB4zz3dAzDqeApGepBoy0OtKAY7kMM13eR5HZKD38_D28.mp4",
+  "config": "docs/evaluation/violations/overtaking/config_overtaking_video_v1.json",
+  "frames_processed": 120,
+  "candidates_recorded": 0,
+  "run_directory": "docs/evaluation/violations/overtaking/real_video_runs/AQM8WohQt18XbF6shV4ARkV5OhMJvivrkL9NnsXJOGWDGBT6fhfliSOB4zz3dAzDqeApGepBoy0OtKAY7kMM13eR5HZKD38_D28_20261009_181358",
+  "log": "docs/evaluation/violations/overtaking/real_video_runs/detector_run_log.txt",
+  "ground_truth_labels": "NOT_AVAILABLE",
+  "event_metrics": "NOT_MEASURED",
+  "limitation": "Template lane geometry not calibrated to this camera; no overtaking candidates in first 120 frames.",
+  "extended_diagnosis_600_frames": {
+    "unique_tracks": 32,
+    "candidates": 0,
+    "path": "diagnosis_20261009_600f/diagnosis.json"
+  },
+  "root_cause_doc": "ZERO_CANDIDATES_DIAGNOSIS.md"
+}
