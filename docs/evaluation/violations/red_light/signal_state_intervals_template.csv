@@ -1,0 +1,3 @@
+row_type,interval_start_seconds,interval_end_seconds,reviewer_confirmed_state,reviewer_id,notes
+interval,,,,,"One row per contiguous period. States: red, amber, green, unknown. Times in video seconds from t=0."
+observation,,,,,"Optional: use signal_state_observations.csv for frame notes; only interval rows are merged."

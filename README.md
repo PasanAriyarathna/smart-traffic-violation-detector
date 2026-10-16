@@ -38,10 +38,20 @@ detected reliably.
   It produces only `NEEDS_REVIEW` candidates; it does not decide legal status.
 - Lane-crossing violations are not implemented; detected road markings alone
   are insufficient without calibrated road geometry and vehicle trajectories.
-- `model/train_yolvo6.py` is an empty placeholder. Training is not implemented
-  by this repository; the existing checkpoint is used for inference.
-- `blockchain/violation_logger.sol` is an empty placeholder. Blockchain
-  logging is optional and not implemented.
+- `model/train_yolvo6.py` trains/evaluates YOLOv8 via Ultralytics when a local
+  dataset YAML and weights path exist (resource-intensive; existing checkpoint
+  is used for inference by default).
+- `model/plate_ocr.py` provides optional EasyOCR plate reading, CER helpers,
+  and SHA-256 plate hashing (`--enable-plate-ocr` on the detector CLI).
+- `blockchain/contracts/ViolationLogger.sol` plus Hardhat tests implement
+  hash-only metadata logging; Sepolia deployment uses `.env` (see
+  `.env.example`).
+- `backend/app/main.py` is a FastAPI review API and minimal HTML dashboard.
+- `docs/research_paper/build_paper.py` generates a simple PDF using measured
+  metrics in `docs/research_paper/evaluation_results.json`.
+- `docs/research_paper/ieee/build_ieee_pdf.ps1` builds an **IEEEtran** conference
+  PDF (`docs/research_paper/ieee/Smart_Traffic_Violation_IEEE.pdf`) with
+  per-class AP figures and evaluation tables.
 - Dataset source-video provenance has not been established. Do not interpret
   current dataset metrics as reliable video-independent research evaluation.
 
@@ -53,12 +63,12 @@ detected reliably.
 - The currently inspected local environment uses Python 3.13.1, Ultralytics
   8.4.174, CPU-only PyTorch 2.14.1, and OpenCV 5.0.0.93. These versions are
   not pinned in a dependency manifest.
-- Solidity is a planned integration area; the current contract file is empty.
+- Solidity: `blockchain/contracts/ViolationLogger.sol` with Hardhat unit tests (local chain only unless `.env` is configured).
 
 ## Repository layout
 
 ```text
-blockchain/                 Solidity project placeholder
+blockchain/                 Hardhat project (ViolationLogger contract + tests)
 datasets/                   Local datasets (excluded from new Git additions)
 model/                       Inference pipeline and review rules
 tests/                       Focused rule tests
@@ -279,5 +289,12 @@ a documented held-out evaluation set.
 - Pin dependencies and record model/data versions for reproducible runs.
 - Report reproducible per-class metrics and limitations before claiming
   operational violation detection.
-- Implement and test any planned blockchain integration before describing it
-  as a functioning feature.
+- Configure Sepolia (`.env.example`) before claiming public testnet deployment.
+
+## Validation and audit (2026-10-09)
+
+- Reports: `docs/validation/repository_audit.md`, `implementation_gap_analysis.md`,
+  `bug_fix_report.md`, `overtaking_validation_report.md`, `final_validation_report.md`
+- Machine-readable: `docs/validation/evaluation_summary.json`
+- Regression tests: `python -m pytest tests/ -q` (26 tests + 3 subtests at last run)
+- Overtaking example config: `configs/examples/overtaking_template.json`

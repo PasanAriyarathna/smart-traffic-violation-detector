@@ -1,0 +1,26 @@
+{
+  "experiment_id": "pipeline_smoke",
+  "git_commit": "fd8bc5e0da0788a34ba4ecd8874f1c612ea9188c",
+  "input_video": "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\datasets\\raw_clips\\no helmet events\\not wearing helmets.mp4",
+  "input_video_sha256": "22e252d588ad498382b1df7ee948887ca0580ee2c4bf9b960cac8bdc08ac70ca",
+  "video_duration_seconds_est": 40.767,
+  "frame_count": 1223,
+  "detector_stage": {
+    "status": "inherited_from_prior_run",
+    "jsonl": "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\runs\\violation_detector\\not wearing helmets_20261009_124822\\events.jsonl",
+    "candidate_count": 48,
+    "candidate_type": "helmet_not_observed_on_associated_rider"
+  },
+  "api_db_stage": {
+    "status": "not_run_in_this_script",
+    "note": "Use tests/test_api_integration.py with temporary SQLite"
+  },
+  "blockchain_stage": {
+    "status": "blocked_without_env",
+    "note": "Sepolia credentials not configured (.env absent)"
+  },
+  "hash_stage": {
+    "status": "not_automated_in_pipeline",
+    "note": "Evidence hashes must be computed at verify/log-chain time"
+  }
+}

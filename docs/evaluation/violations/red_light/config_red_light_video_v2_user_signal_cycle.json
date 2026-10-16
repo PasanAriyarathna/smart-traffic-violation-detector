@@ -1,0 +1,41 @@
+{
+  "frame_width": 1268,
+  "frame_height": 718,
+  "traffic_light_regions": [
+    [
+      0.35,
+      0.06,
+      0.68,
+      0.32
+    ]
+  ],
+  "stop_line": [
+    [
+      120,
+      540
+    ],
+    [
+      1180,
+      540
+    ]
+  ],
+  "approach_side": 1,
+  "cooldown_seconds": 10,
+  "signal_states": [
+    {
+      "start_seconds": 0.0,
+      "end_seconds": 10.0,
+      "state": "red"
+    },
+    {
+      "start_seconds": 10.0,
+      "end_seconds": 11.0,
+      "state": "amber"
+    },
+    {
+      "start_seconds": 11.0,
+      "end_seconds": 14.256,
+      "state": "green"
+    }
+  ]
+}

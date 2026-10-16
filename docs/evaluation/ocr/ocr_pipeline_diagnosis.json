@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-09",
+  "easyocr_available": true,
+  "crops_processed": 30,
+  "predicted_nonempty_after_populate": 0,
+  "sample_crop": "docs/evaluation/plate_crops/frame_0005_jpg.rf.6c2006a2fd7f29e506ff2c4dbf7e954b_plate0.jpg",
+  "sample_shape_hw": [14, 38],
+  "sample_readtext_detections": 0,
+  "interpretation": "Plate crops are very low resolution; EasyOCR returns no detections. CER remains NOT MEASURED until human ground_truth_plate_text is entered; hypotheses may remain empty or require upscaled re-export of crops.",
+  "cer_measurable": false,
+  "recommended_human_steps": [
+    "Review ocr/review_package_20261009/ocr_contact_sheet.jpg",
+    "Enter ground_truth_plate_text in ocr_review_annotations.csv for readable plates",
+    "Set include_in_cer=yes only for verified readable crops",
+    "Optional: re-export larger plate crops from detector before OCR re-run"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "run_id": "human_eval_geometry_v2_20261009",
+  "config": "config_red_light_video_v2_geometry.json",
+  "video": "datasets/raw_clips/red light events/red light.mp4",
+  "frames_processed": 416,
+  "red_light_candidates": 0,
+  "helmet_candidates": 1,
+  "helmet_only_note": "Helmet rule runs by default; not red-light validation.",
+  "run_directory": "real_video_runs/human_eval_geometry_v2_20261009/red light_20261009_183018",
+  "red_light_predictions_csv": "human_eval_v2_red_light_predictions.csv",
+  "signal_states_status": "unknown for full clip until signal_state_review_template.csv completed",
+  "metrics": "NOT_MEASURED"
+}

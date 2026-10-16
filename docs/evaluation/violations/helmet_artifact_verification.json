@@ -1,0 +1,10 @@
+{
+  "jsonl_path": "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\runs\\violation_detector\\not wearing helmets_20261009_124822\\events.jsonl",
+  "jsonl_line_count": 48,
+  "unique_event_ids": 48,
+  "unique_tracking_ids": 35,
+  "missing_evidence_files": 0,
+  "review_csv_rows": 48,
+  "evidence_dir_jpg_count": 48,
+  "status": "verified"
+}

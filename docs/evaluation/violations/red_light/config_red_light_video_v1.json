@@ -1,0 +1,13 @@
+{
+  "frame_width": 1268,
+  "frame_height": 718,
+  "traffic_light_regions": [[0.82, 0.02, 0.98, 0.24]],
+  "stop_line": [[185, 459], [1083, 459]],
+  "approach_side": -1,
+  "cooldown_seconds": 10,
+  "signal_states": [
+    {"start_seconds": 0.0, "end_seconds": 120.0, "state": "unknown"},
+    {"start_seconds": 120.0, "end_seconds": 125.0, "state": "red"}
+  ],
+  "_validation_note": "BLOCKER: 0-120s is 'unknown' so no red-light candidates emit for clips shorter than 120s. Red interval starts at 120s (outside ~14s video). Stop line/ROI require manual calibration — see ZERO_CANDIDATES_DIAGNOSIS.md."
+}

@@ -1,0 +1,4 @@
+experiment,metric,value,status,source
+detector_val_test,precision,0.5258897799251159,VERIFIED,D:\Campus\semester 6\Intelligent system\smart-traffic-violation-detector\docs\evaluation\detector\detector_val_test_20261009T120646Z\metrics.json
+detector_val_test,map50,0.40740148890017047,VERIFIED,D:\Campus\semester 6\Intelligent system\smart-traffic-violation-detector\docs\evaluation\detector\detector_val_test_20261009T120646Z\metrics.json
+helmet_review,precision,,NOT_MEASURED,D:\Campus\semester 6\Intelligent system\smart-traffic-violation-detector\docs\evaluation\violations\helmet_metrics.json

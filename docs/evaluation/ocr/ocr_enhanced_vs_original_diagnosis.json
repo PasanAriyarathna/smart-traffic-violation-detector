@@ -1,0 +1,33 @@
+{
+  "note": "Counts only; not OCR accuracy. Ground truth unchanged.",
+  "total_rows": 30,
+  "original_crops": {
+    "nonempty_predictions": 0,
+    "sample_nonempty": []
+  },
+  "enhanced_crops": {
+    "nonempty_predictions": 4,
+    "sample_nonempty": [
+      {
+        "image_id": "plate_005",
+        "filename": "frame_0003_jpg.rf.e30737d67d5eef7b024a02848f2d90cb_plate1.jpg",
+        "text_len": 3
+      },
+      {
+        "image_id": "plate_010",
+        "filename": "frame_0007_jpg.rf.d8fe5689a15080caf064b99df74345b3_plate1.jpg",
+        "text_len": 1
+      },
+      {
+        "image_id": "plate_015",
+        "filename": "frame_0011_jpg.rf.c7af8190852e2b596efbd8053378f6ac_plate0.jpg",
+        "text_len": 2
+      },
+      {
+        "image_id": "plate_017",
+        "filename": "frame_0013_jpg.rf.dd9bdfdc84ed3143e14ca12b0a4155c7_plate0.jpg",
+        "text_len": 4
+      }
+    ]
+  }
+}

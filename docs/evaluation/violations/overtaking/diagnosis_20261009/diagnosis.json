@@ -1,0 +1,139 @@
+{
+  "generated_at_utc": "2026-10-09T12:49:34.133340+00:00",
+  "source_video": "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\datasets\\raw_clips\\illegal overtaking\\AQM8WohQt18XbF6shV4ARkV5OhMJvivrkL9NnsXJOGWDGBT6fhfliSOB4zz3dAzDqeApGepBoy0OtKAY7kMM13eR5HZKD38_D28.mp4",
+  "config": "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\docs\\evaluation\\violations\\overtaking\\config_overtaking_video_v1.json",
+  "kind": "overtaking",
+  "max_frames": 120,
+  "video_geometry": {
+    "width": 1440,
+    "height": 1080,
+    "fps": 30.046
+  },
+  "detector": {
+    "weights": "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\runs\\detect\\runs\\traffic_violation\\yolov8n_v1\\weights\\best.pt",
+    "conf": 0.25,
+    "tracker": "bytetrack.yaml"
+  },
+  "aggregate_detections": {
+    "frames_processed": 120,
+    "sum_vehicle_tracked_per_frame": 313,
+    "frames_with_zero_vehicles": 0
+  },
+  "rule_diagnosis": {
+    "config_supported": true,
+    "unsupported_reasons": [],
+    "vehicle_observations_in_travel_lane": 253,
+    "vehicle_observations_in_passing_lane": 60,
+    "vehicle_observations_outside_configured_lanes": 0,
+    "unique_vehicle_track_ids": 3,
+    "rule_candidates_emitted": 0
+  },
+  "diagnostic_frames": [
+    "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\docs\\evaluation\\violations\\overtaking\\diagnosis_20261009\\frames\\frame_0000.jpg",
+    "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\docs\\evaluation\\violations\\overtaking\\diagnosis_20261009\\frames\\frame_0030.jpg",
+    "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\docs\\evaluation\\violations\\overtaking\\diagnosis_20261009\\frames\\frame_0060.jpg",
+    "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\docs\\evaluation\\violations\\overtaking\\diagnosis_20261009\\frames\\frame_0090.jpg",
+    "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\docs\\evaluation\\violations\\overtaking\\diagnosis_20261009\\frames\\frame_0119.jpg"
+  ],
+  "sample_frame_stats": [
+    {
+      "frame_index": 0,
+      "video_seconds": 0.0,
+      "total_detections": 6,
+      "vehicle_tracked": 2,
+      "vehicle_classes": [
+        "three_wheeler"
+      ]
+    },
+    {
+      "frame_index": 12,
+      "video_seconds": 0.399,
+      "total_detections": 6,
+      "vehicle_tracked": 2,
+      "vehicle_classes": [
+        "car",
+        "three_wheeler"
+      ]
+    },
+    {
+      "frame_index": 24,
+      "video_seconds": 0.799,
+      "total_detections": 8,
+      "vehicle_tracked": 3,
+      "vehicle_classes": [
+        "car",
+        "three_wheeler"
+      ]
+    },
+    {
+      "frame_index": 36,
+      "video_seconds": 1.198,
+      "total_detections": 7,
+      "vehicle_tracked": 2,
+      "vehicle_classes": [
+        "car",
+        "three_wheeler"
+      ]
+    },
+    {
+      "frame_index": 48,
+      "video_seconds": 1.598,
+      "total_detections": 8,
+      "vehicle_tracked": 2,
+      "vehicle_classes": [
+        "car",
+        "three_wheeler"
+      ]
+    },
+    {
+      "frame_index": 60,
+      "video_seconds": 1.997,
+      "total_detections": 10,
+      "vehicle_tracked": 3,
+      "vehicle_classes": [
+        "car",
+        "three_wheeler"
+      ]
+    },
+    {
+      "frame_index": 72,
+      "video_seconds": 2.396,
+      "total_detections": 8,
+      "vehicle_tracked": 2,
+      "vehicle_classes": [
+        "car",
+        "three_wheeler"
+      ]
+    },
+    {
+      "frame_index": 84,
+      "video_seconds": 2.796,
+      "total_detections": 7,
+      "vehicle_tracked": 3,
+      "vehicle_classes": [
+        "car",
+        "three_wheeler"
+      ]
+    },
+    {
+      "frame_index": 96,
+      "video_seconds": 3.195,
+      "total_detections": 7,
+      "vehicle_tracked": 3,
+      "vehicle_classes": [
+        "car",
+        "three_wheeler"
+      ]
+    },
+    {
+      "frame_index": 108,
+      "video_seconds": 3.595,
+      "total_detections": 7,
+      "vehicle_tracked": 3,
+      "vehicle_classes": [
+        "car",
+        "three_wheeler"
+      ]
+    }
+  ]
+}

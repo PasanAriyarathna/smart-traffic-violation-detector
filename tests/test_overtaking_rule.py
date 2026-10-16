@@ -132,6 +132,100 @@ class OvertakingRuleTests(unittest.TestCase):
         rule = OvertakingRule(config)
         self.assertEqual(feed_sequence(rule), [])
 
+    def test_vehicles_side_by_side_in_travel_lane_without_passing_lane_use(self):
+        rule = OvertakingRule(make_config())
+        candidates = []
+        for time, actor_y, target_y in (
+            (0.0, 0.35, 0.35),
+            (0.2, 0.40, 0.40),
+            (0.4, 0.45, 0.46),
+            (0.6, 0.50, 0.51),
+            (0.8, 0.55, 0.56),
+        ):
+            candidates.extend(
+                rule.update(
+                    [detection(10, 0.35, actor_y), detection(20, 0.35, target_y, name="truck")],
+                    time,
+                )
+            )
+        self.assertEqual(candidates, [])
+
+    def test_opposite_direction_progress_does_not_create_candidate(self):
+        rule = OvertakingRule(make_config(progress_direction=[0.0, -1.0]))
+        candidates = []
+        for time, actor_y, target_y in (
+            (0.0, 0.70, 0.55),
+            (0.2, 0.60, 0.50),
+            (0.4, 0.50, 0.45),
+            (0.6, 0.40, 0.40),
+            (0.8, 0.30, 0.35),
+        ):
+            candidates.extend(
+                rule.update(
+                    [
+                        detection(10, 0.75, actor_y),
+                        detection(20, 0.35, target_y, name="truck"),
+                    ],
+                    time,
+                )
+            )
+        self.assertEqual(candidates, [])
+
+    def test_lane_change_into_passing_without_progress_crossing_is_not_overtaking(self):
+        rule = OvertakingRule(make_config())
+        candidates = []
+        for time, actor_x, actor_y, target_y in (
+            (0.0, 0.35, 0.20, 0.35),
+            (0.2, 0.35, 0.30, 0.40),
+            (0.4, 0.75, 0.35, 0.45),
+            (0.6, 0.75, 0.38, 0.50),
+            (0.8, 0.75, 0.40, 0.55),
+        ):
+            candidates.extend(
+                rule.update(
+                    [detection(10, actor_x, actor_y), detection(20, 0.35, target_y, name="truck")],
+                    time,
+                )
+            )
+        self.assertEqual(candidates, [])
+
+    def test_temporary_detection_loss_clears_trajectory(self):
+        rule = OvertakingRule(make_config(maximum_track_gap_seconds=0.25))
+        partial = [
+            (0.0, 0.35, 0.20, 0.35),
+            (0.2, 0.35, 0.30, 0.40),
+            (0.4, 0.75, 0.50, 0.45),
+        ]
+        for time, actor_x, actor_y, target_y in partial:
+            rule.update(
+                [detection(10, actor_x, actor_y), detection(20, 0.35, target_y, name="truck")],
+                time,
+            )
+        self.assertEqual(rule.update([], 1.0), [])
+        tail_candidates = []
+        for time, actor_x, actor_y, target_y in (
+            (1.2, 0.75, 0.60, 0.50),
+            (1.4, 0.35, 0.70, 0.55),
+        ):
+            tail_candidates.extend(
+                rule.update(
+                    [detection(10, actor_x, actor_y), detection(20, 0.35, target_y, name="truck")],
+                    time,
+                )
+            )
+        self.assertEqual(tail_candidates, [])
+
+    def test_annotation_template_is_not_supported(self):
+        template = (
+            Path(__file__).resolve().parents[1]
+            / "docs/evaluation/violations/overtaking/config_overtaking_annotation_template_1440x1080.json"
+        )
+        if not template.is_file():
+            self.skipTest("overtaking template not in tree")
+        config = OvertakingConfig.from_file(template)
+        self.assertFalse(config.is_supported)
+        self.assertTrue(config.unsupported_reasons)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -82,6 +82,16 @@ class RedLightRuleTests(unittest.TestCase):
         rule.update([vehicle(1, 40)], 0.0)
         self.assertEqual(rule.update([vehicle(1, 60)], 1.0), [])
 
+    def test_amber_interval_never_creates_candidate(self):
+        rule = RedLightRule(config([SignalInterval(0.0, 5.0, "amber")]))
+        rule.update([vehicle(1, 40)], 0.0)
+        self.assertEqual(rule.update([vehicle(1, 60)], 1.0), [])
+
+    def test_red_signal_vehicle_stops_before_stop_line(self):
+        rule = RedLightRule(config([SignalInterval(0.0, 5.0, "red")]))
+        rule.update([vehicle(2, 40)], 0.0)
+        self.assertEqual(rule.update([vehicle(2, 48)], 1.0), [])
+
     def test_no_crossing_or_missing_track_id_creates_no_candidate(self):
         rule = RedLightRule(config([SignalInterval(0.0, 5.0, "red")]))
         rule.update([vehicle(1, 40)], 0.0)

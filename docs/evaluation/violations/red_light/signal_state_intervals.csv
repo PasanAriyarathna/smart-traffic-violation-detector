@@ -1,0 +1,4 @@
+row_type,interval_start_seconds,interval_end_seconds,reviewer_confirmed_state,reviewer_id,notes
+interval,0,10,red,user_provided,"Red 10s (cycle start); video duration ~14.256s"
+interval,10,11,amber,user_provided,"Amber 1s"
+interval,11,14.256,green,user_provided,"Green truncated at video end (full cycle green would be 11-61s)"

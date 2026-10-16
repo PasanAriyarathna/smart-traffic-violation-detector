@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Helmet Candidate Review</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 1rem; max-width: 1200px; }
+    table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+    td, th { border: 1px solid #ccc; padding: 6px; vertical-align: top; }
+    img { max-width: 280px; max-height: 200px; display: block; }
+    .note { color: #444; font-size: 0.9rem; margin-bottom: 1rem; }
+    select { width: 100%; }
+    #status { margin: 0.5rem 0; font-weight: 600; }
+    button { margin-right: 0.5rem; margin-top: 0.5rem; }
+  </style>
+</head>
+<body>
+  <h1>Helmet candidate review</h1>
+  <p class="note">Load <code>helmet_reviewed_annotations.csv</code>. Labels: <strong>TP</strong>, <strong>FP</strong>, <strong>Ambiguous</strong>, <strong>Unreviewed</strong>. Not legal findings.</p>
+  <input type="file" id="file" accept=".csv" />
+  <button type="button" id="export">Download updated CSV</button>
+  <p id="status"></p>
+  <table id="grid">
+    <thead>
+      <tr>
+        <th>Evidence</th>
+        <th>IDs / time</th>
+        <th>Label</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <script>
+    let headers = [];
+    let rows = [];
+
+    function parseCsv(text) {
+      const lines = text.split(/\r?\n/).filter(l => l.length);
+      headers = lines[0].split(",");
+      rows = lines.slice(1).map(line => {
+        const parts = [];
+        let cur = "", inQ = false;
+        for (let i = 0; i < line.length; i++) {
+          const c = line[i];
+          if (c === '"') { inQ = !inQ; continue; }
+          if (c === "," && !inQ) { parts.push(cur); cur = ""; continue; }
+          cur += c;
+        }
+        parts.push(cur);
+        const obj = {};
+        headers.forEach((h, i) => obj[h.trim()] = (parts[i] || "").trim());
+        return obj;
+      });
+    }
+
+    function render() {
+      const tbody = document.querySelector("#grid tbody");
+      tbody.innerHTML = "";
+      rows.forEach((row, idx) => {
+        const tr = document.createElement("tr");
+        const img = document.createElement("img");
+        img.src = "file:///" + row.evidence_image.replace(/\\/g, "/");
+        img.alt = row.candidate_id;
+        const labelSelect = document.createElement("select");
+        ["Unreviewed", "TP", "FP", "Ambiguous"].forEach(opt => {
+          const o = document.createElement("option");
+          o.value = opt; o.textContent = opt;
+          if ((row.reviewer_label || "Unreviewed").toLowerCase() === opt.toLowerCase()) o.selected = true;
+          labelSelect.appendChild(o);
+        });
+        labelSelect.addEventListener("change", () => { rows[idx].reviewer_label = labelSelect.value; updateStatus(); });
+        const notes = document.createElement("textarea");
+        notes.rows = 3; notes.value = row.reviewer_notes || "";
+        notes.addEventListener("input", () => { rows[idx].reviewer_notes = notes.value; });
+        tr.innerHTML = `<td></td><td><code>${row.candidate_id}</code><br/>t=${row.timestamp}<br/>person=${row.track_id} bike=${row.associated_motorcycle_tracking_id}</td><td></td><td></td>`;
+        tr.children[0].appendChild(img);
+        tr.children[2].appendChild(labelSelect);
+        tr.children[3].appendChild(notes);
+        tbody.appendChild(tr);
+      });
+      updateStatus();
+    }
+
+    function updateStatus() {
+      const tp = rows.filter(r => (r.reviewer_label || "").toUpperCase() === "TP").length;
+      const fp = rows.filter(r => (r.reviewer_label || "").toUpperCase() === "FP").length;
+      const un = rows.filter(r => !r.reviewer_label || r.reviewer_label.toLowerCase() === "unreviewed").length;
+      document.getElementById("status").textContent = `Rows: ${rows.length} | TP: ${tp} | FP: ${fp} | Unreviewed: ${un}`;
+    }
+
+    function exportCsv() {
+      const esc = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
+      const lines = [headers.join(",")];
+      rows.forEach(r => lines.push(headers.map(h => esc(r[h])).join(",")));
+      const blob = new Blob([lines.join("\n")], { type: "text/csv" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "helmet_reviewed_annotations.csv";
+      a.click();
+    }
+
+    document.getElementById("file").addEventListener("change", e => {
+      const f = e.target.files[0];
+      if (!f) return;
+      const reader = new FileReader();
+      reader.onload = () => { parseCsv(reader.result); render(); };
+      reader.readAsText(f);
+    });
+    document.getElementById("export").addEventListener("click", exportCsv);
+  </script>
+</body>
+</html>

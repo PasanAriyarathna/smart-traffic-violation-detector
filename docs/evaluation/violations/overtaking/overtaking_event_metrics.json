@@ -1,0 +1,15 @@
+{
+  "predictions_csv": "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\docs\\evaluation\\violations\\overtaking\\overtaking_predictions_for_review.csv",
+  "total_predictions": 0,
+  "tp": 0,
+  "fp": 0,
+  "ambiguous": 0,
+  "unlabeled": 0,
+  "evaluation_sample_count_for_precision": 0,
+  "precision": null,
+  "fn_independent": null,
+  "recall": null,
+  "f1": null,
+  "status": "NOT_MEASURED",
+  "status_reason": "No prediction rows."
+}

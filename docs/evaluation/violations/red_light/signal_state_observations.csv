@@ -1,0 +1,8 @@
+row_type,video_seconds,frame_index,visible_signal_description,reviewer_id,notes
+observation,0,0,red light countdown 10,investigation_20261009,ROI contact sheet t_00000
+observation,2.05,60,red light countdown 8,prior_note,Consistent with ~1s countdown step
+observation,7.0,204,red light countdown 3,investigation_20261009,Matches PotPlayer ~7s screenshot
+observation,9.0,261,red light countdown 1,investigation_20261009,signal_roi_contact_sheet
+observation,10.0,290,red light on countdown blank,investigation_20261009,
+observation,11.0,319,red light on countdown shows 51 green digits,investigation_20261009,Display may show next-phase length while red still lit; confirm visually
+observation,12.0,348,green arrow on countdown 50,investigation_20261009,Phase change between 11s and 12s

@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-09",
+  "command": "python -m pytest tests/test_api_integration.py -q",
+  "tests_passed": 3,
+  "tests_failed": 0,
+  "cases": [
+    {
+      "name": "test_health",
+      "status": "passed",
+      "endpoint": "GET /health"
+    },
+    {
+      "name": "test_import_and_verify",
+      "status": "passed",
+      "notes": "Imports helmet JSONL when artifact present; verify sets VERIFIED; log-chain returns 503 without chain config"
+    },
+    {
+      "name": "test_import_missing_jsonl",
+      "status": "passed",
+      "expected_status": 404
+    }
+  ],
+  "database": "temporary SQLite via STVD_DB_PATH (class-scoped temp dir, ignore_cleanup_errors on Windows)"
+}

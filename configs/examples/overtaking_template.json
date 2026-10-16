@@ -1,0 +1,20 @@
+{
+  "frame_width": 1920,
+  "frame_height": 1080,
+  "lanes": {
+    "travel": [[0.0, 0.0], [0.55, 0.0], [0.55, 1.0], [0.0, 1.0]],
+    "passing": [[0.55, 0.0], [1.0, 0.0], [1.0, 1.0], [0.55, 1.0]]
+  },
+  "progress_direction": [0.0, 1.0],
+  "prohibited_passing_zones": [
+    [[0.55, 0.0], [1.0, 0.0], [1.0, 1.0], [0.55, 1.0]]
+  ],
+  "prohibition_basis": "Manually reviewed no-passing section for this fixed camera (replace with jurisdiction-specific notes).",
+  "minimum_observations": 6,
+  "minimum_duration_seconds": 0.5,
+  "minimum_order_gap": 0.025,
+  "minimum_forward_progress": 0.04,
+  "maximum_track_gap_seconds": 0.25,
+  "maximum_maneuver_seconds": 5.0,
+  "_comment": "Set frame_width/height to match the source video. Polygons use normalized [0,1] coordinates. Run probe_video_geometry.py before editing."
+}

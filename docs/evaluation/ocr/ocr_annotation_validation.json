@@ -1,0 +1,10 @@
+{
+  "csv_path": "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\docs\\evaluation\\ocr\\ocr_review_annotations.csv",
+  "row_count": 30,
+  "missing_columns": [],
+  "rows_with_ground_truth": 0,
+  "cer_evaluation_sample_count": 0,
+  "cer_measurable": false,
+  "errors": [],
+  "status": "OK"
+}

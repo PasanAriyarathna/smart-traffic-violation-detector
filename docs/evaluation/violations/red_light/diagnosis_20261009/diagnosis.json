@@ -1,0 +1,150 @@
+{
+  "generated_at_utc": "2026-10-09T12:48:25.576031+00:00",
+  "source_video": "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\datasets\\raw_clips\\red light events\\red light.mp4",
+  "config": "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\docs\\evaluation\\violations\\red_light\\config_red_light_video_v1.json",
+  "kind": "red_light",
+  "max_frames": 120,
+  "video_geometry": {
+    "width": 1268,
+    "height": 718,
+    "fps": 29.181
+  },
+  "detector": {
+    "weights": "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\runs\\detect\\runs\\traffic_violation\\yolov8n_v1\\weights\\best.pt",
+    "conf": 0.25,
+    "tracker": "bytetrack.yaml"
+  },
+  "aggregate_detections": {
+    "frames_processed": 120,
+    "sum_vehicle_tracked_per_frame": 288,
+    "frames_with_zero_vehicles": 0
+  },
+  "rule_diagnosis": {
+    "config_supported": true,
+    "unsupported_reasons": [],
+    "run_duration_seconds_approx": 4.078,
+    "signal_intervals": [
+      {
+        "start": 0.0,
+        "end": 120.0,
+        "state": "unknown",
+        "overlaps_run_window": true
+      },
+      {
+        "start": 120.0,
+        "end": 125.0,
+        "state": "red",
+        "overlaps_run_window": false
+      }
+    ],
+    "signal_states_observed_during_run": {
+      "unknown": 120
+    },
+    "stop_line_crossings_geometry_only": 0,
+    "crossings_during_reviewed_red_interval": 0,
+    "rule_candidates_emitted": 0
+  },
+  "diagnostic_frames": [
+    "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\docs\\evaluation\\violations\\red_light\\diagnosis_20261009\\frames\\frame_0000.jpg",
+    "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\docs\\evaluation\\violations\\red_light\\diagnosis_20261009\\frames\\frame_0030.jpg",
+    "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\docs\\evaluation\\violations\\red_light\\diagnosis_20261009\\frames\\frame_0060.jpg",
+    "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\docs\\evaluation\\violations\\red_light\\diagnosis_20261009\\frames\\frame_0090.jpg",
+    "D:\\Campus\\semester 6\\Intelligent system\\smart-traffic-violation-detector\\docs\\evaluation\\violations\\red_light\\diagnosis_20261009\\frames\\frame_0119.jpg"
+  ],
+  "sample_frame_stats": [
+    {
+      "frame_index": 0,
+      "video_seconds": 0.0,
+      "total_detections": 7,
+      "vehicle_tracked": 2,
+      "vehicle_classes": [
+        "motorcycle"
+      ]
+    },
+    {
+      "frame_index": 12,
+      "video_seconds": 0.411,
+      "total_detections": 9,
+      "vehicle_tracked": 3,
+      "vehicle_classes": [
+        "car",
+        "motorcycle"
+      ]
+    },
+    {
+      "frame_index": 24,
+      "video_seconds": 0.822,
+      "total_detections": 6,
+      "vehicle_tracked": 2,
+      "vehicle_classes": [
+        "motorcycle"
+      ]
+    },
+    {
+      "frame_index": 36,
+      "video_seconds": 1.234,
+      "total_detections": 8,
+      "vehicle_tracked": 4,
+      "vehicle_classes": [
+        "car",
+        "motorcycle"
+      ]
+    },
+    {
+      "frame_index": 48,
+      "video_seconds": 1.645,
+      "total_detections": 5,
+      "vehicle_tracked": 2,
+      "vehicle_classes": [
+        "car",
+        "motorcycle"
+      ]
+    },
+    {
+      "frame_index": 60,
+      "video_seconds": 2.056,
+      "total_detections": 5,
+      "vehicle_tracked": 2,
+      "vehicle_classes": [
+        "car"
+      ]
+    },
+    {
+      "frame_index": 72,
+      "video_seconds": 2.467,
+      "total_detections": 8,
+      "vehicle_tracked": 4,
+      "vehicle_classes": [
+        "car",
+        "motorcycle"
+      ]
+    },
+    {
+      "frame_index": 84,
+      "video_seconds": 2.879,
+      "total_detections": 4,
+      "vehicle_tracked": 2,
+      "vehicle_classes": [
+        "car"
+      ]
+    },
+    {
+      "frame_index": 96,
+      "video_seconds": 3.29,
+      "total_detections": 4,
+      "vehicle_tracked": 2,
+      "vehicle_classes": [
+        "car"
+      ]
+    },
+    {
+      "frame_index": 108,
+      "video_seconds": 3.701,
+      "total_detections": 3,
+      "vehicle_tracked": 1,
+      "vehicle_classes": [
+        "car"
+      ]
+    }
+  ]
+}

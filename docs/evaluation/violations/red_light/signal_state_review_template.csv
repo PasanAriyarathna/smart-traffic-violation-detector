@@ -1,0 +1,4 @@
+video_start_seconds,video_end_seconds,video_seconds,observed_in_frame_index,visible_signal_description,reviewer_confirmed_state,interval_start_seconds,interval_end_seconds,reviewer_id,notes
+0,14.22,,,,,,,,"Video duration ~14.22s (416 frames @ ~29.1 fps). Merge uses signal_state_intervals.csv only."
+0,,0,0,red light with countdown 10,,,,,"Observation only — not merged until converted to interval rows."
+,,2.05,60,red light with countdown 8,,,,,"Partial timeline; evaluation blocked until signal_state_intervals.csv is complete."
